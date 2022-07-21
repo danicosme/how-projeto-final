@@ -41,6 +41,16 @@ def s3_silver(df, table):
     )
 
 
+def s3_gold(df, table):
+    wr.s3.to_parquet(
+        df=df,
+        path=f's3://how-dcb-data-lake-gold/{table}',
+        dataset=True,
+        partition_cols=['table','year','month','day'],
+        mode='overwrite_partitions'
+    )
+
+
 def exctract_path(records):
     bucket_name = records['Records'][0]['s3']['bucket']['name']
     object_key = records['Records'][0]['s3']['object']['key']
@@ -52,12 +62,29 @@ def exctract_path(records):
 
 
 def read_file_s3(path):
-    print(path)
     df = wr.s3.read_json(
         path = path
     )
 
     return df
+
+
+def read_file_s3(path):
+    df = wr.s3.read_json(
+        path = path
+    )
+
+    return df
+
+
+def read_all_files_s3(path):
+    df = wr.s3.read_json(
+        path = path,
+        dataset = True
+    )
+
+    return df
+
 
 def column_types(df, types):
     for type in types.items():
@@ -90,6 +117,12 @@ def create_partition(df, date):
     df['month'] = month
     df['day'] = day
     
+    return df
+
+
+def dedup_gold(df):
+    chave = ['url']
+    df.sort_values('edited').drop_duplicates(chave, keep = 'last')
     return df
 
 

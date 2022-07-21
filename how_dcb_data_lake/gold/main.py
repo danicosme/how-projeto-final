@@ -1,4 +1,4 @@
-from how_dcb_data_lake.functions import logs, exctract_path, read_file_s3, column_types, s3_silver, create_partition
+from how_dcb_data_lake.functions import logs, exctract_path, read_all_files_s3, s3_gold, dedup_gold
 from how_dcb_data_lake.constants import *
 import json
 import datetime
@@ -10,45 +10,27 @@ def lambda_handler(event,context):
     try:
         records = json.loads(event['Message'])
 
-        logger.info('Processamento de envio da camada Bronze para Silver iniciado')
+        logger.info('Processamento de envio da camada Bronze para Gold iniciado')
 
         if 'Records' in records:
             table, path_file_s3 = exctract_path(records)
             
             logger.info(f'Iniciando leitura do arquivo {path_file_s3} da camada Bronze')
-            df = read_file_s3(path_file_s3)
+            df = read_all_files_s3(path_file_s3)
 
             logger.info(f'Criando partições de tablea, ano, mes e dia')
             df['table'] = table
 
-            date = datetime.date.today()
-            df = create_partition(df, date)
-
             logger.info(f'Iniciando tratamento de tipos de dados')
-            if table == 'films':
-                 data_type = film_types
-            elif table == 'peoples':
-                data_type = peoples_types
-            elif table == 'planets':
-                data_type = planets_types
-            elif table == 'species':
-                data_type = species_types
-            elif table == 'starships':
-                data_type = starships_types
-            elif table == 'vehicles':
-                data_type = vehicles_types
-            else:
-                logger.warning('Tabela não identificada')
+            df = dedup_gold(df)
             
-            df = column_types(df, data_type)
-            
-            logger.info(f'Iniciando escrita do arquivo em formato .parquet na camada Silver')
-            s3_silver(df,table)
+            logger.info(f'Iniciando escrita do arquivo em formato .parquet na camada Gold')
+            s3_gold(df,table)
 
-            logger.info('Processo de ingestão nada camada Silver concluído com sucesso')
+            logger.info('Processo de ingestão nada camada Gold concluído com sucesso')
             
     except Exception as e:
-        logger.error(f'Erro durante o processo de envio dos dados para a camada Silver: {e}')
+        logger.error(f'Erro durante o processo de envio dos dados para a camada Gold: {e}')
         
 
 def main(event):
