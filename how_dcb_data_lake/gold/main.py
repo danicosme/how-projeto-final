@@ -10,15 +10,15 @@ def lambda_handler(event,context):
     try:
         records = json.loads(event['Message'])
 
-        logger.info('Processamento de envio da camada Bronze para Gold iniciado')
+        logger.info('Processamento de envio da camada Silver para Gold iniciado')
 
         if 'Records' in records:
             table, path_file_s3 = exctract_path(records)
             
-            logger.info(f'Iniciando leitura do arquivo {path_file_s3} da camada Bronze')
+            logger.info(f'Iniciando leitura do arquivo {path_file_s3} da camada Silver')
             df = read_all_files_s3(path_file_s3)
 
-            logger.info(f'Criando partições de tablea, ano, mes e dia')
+            logger.info(f'Criando partições: tabela, ano, mes e dia')
             df['table'] = table
 
             logger.info(f'Iniciando tratamento de tipos de dados')
