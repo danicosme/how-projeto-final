@@ -1,0 +1,128 @@
+film_types = {
+        'title': str,
+        'episode_id': int,
+        'opening_crawl': str,
+        'director': str,
+        'release_date': 'datetime64[ns]',
+        'characters': str,
+        'planets': str,
+        'starships': str,
+        'vehicles': str,
+        'species': str,
+        'created': 'datetime64[ns]',
+        'edited': 'datetime64[ns]',
+        'url': str,
+        'year': str,
+        'month': str,
+        'day': str
+}
+
+peoples_types = {
+            'name': str,
+            'height': int,
+            'mass': str,
+            'hair_color': str,
+            'skin_color': str,
+            'eye_color': str,
+            'birth_year': str,
+            'gender': str,
+            'homeworld': str,
+            'films': str,
+            'species': str,
+            'vehicles': str,
+            'starships': str,
+            'created': 'datetime64[ns]',
+            'edited': 'datetime64[ns]',
+            'url': str,
+            'year': str,
+            'month': str,
+            'day': str
+        }
+    
+planets_types = {
+        'name': str,
+        'rotation_period': int,
+        'orbital_period': int,
+        'diameter': int,
+        'climate': str,
+        'gravity': str,
+        'terrain': str,
+        'surface_water': str,
+        'population': int,
+        'residents': str,
+        'films': str,
+        'created': 'datetime64[ns]',
+        'edited': 'datetime64[ns]',
+        'url': str,
+        'year': str,
+        'month': str,
+        'day': str
+}
+
+
+vehicles_types = {
+        'name': str,
+        'model': str,
+        'manufacturer': str,
+        'cost_in_credits': int,
+        'length': float,
+        'max_atmosphering_speed': int,
+        'crew': int,
+        'passengers': int,
+        'cargo_capacity': int,
+        'consumables': str,
+        'vehicle_class': str,
+        'pilots': str,
+        'films': str,
+        'created': 'datetime64[ns]',
+        'edited': 'datetime64[ns]',
+        'url': str,
+        'year': str,
+        'month': str,
+        'day': str
+}
+
+species_types = {
+        'name': str,
+        'classification': str,
+        'designation': str,
+        'average_height': int,
+        'skin_colors': str,
+        'hair_colors': str,
+        'eye_colors': str,
+        'average_lifespan': int,
+        'homeworld': str,
+        'language': str,
+        'people': str,
+        'films': str,
+        'created': 'datetime64[ns]',
+        'edited': 'datetime64[ns]',
+        'url': str,
+        'year': str,
+        'month': str,
+        'day': str
+}
+
+starships_types = {
+        'name': str,
+        'model': str,
+        'manufacturer': str,
+        'cost_in_credits': int,
+        'length': str,
+        'max_atmosphering_speed': str,
+        'crew': str,
+        'passengers': str,
+        'cargo_capacity': int,
+        'consumables': str,
+        'hyperdrive_rating': str,
+        'MGLT': int,
+        'starship_class': str,
+        'pilots': str,
+        'films': str,
+        'created': 'datetime64[ns]',
+        'edited': 'datetime64[ns]',
+        'url': str,
+        'year': str,
+        'month': str,
+        'day': str
+}
